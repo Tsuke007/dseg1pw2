@@ -11,9 +11,10 @@ app = Flask(__name__)
 # Make the WSGI interface available at the top level so wfastcgi can get it.
 wsgi_app = app.wsgi_app
 
+
 @app.route('/')
-def home():
-    return "Hello API"
+def index():
+    return "Hello World!"
 
 
 @app.route('/predict', methods = ['GET'])
@@ -83,6 +84,8 @@ def predict():
             return "Customer is not interested"
             
    
+#if __name__ == '__main__':
+#    app.run(threaded=True)
 
 if __name__ == '__main__':
     import os
