@@ -1,10 +1,6 @@
-import pandas as pd
 import numpy as np
-from sklearn.model_selection import train_test_split
-from sklearn.ensemble import GradientBoostingClassifier
-from sklearn.svm import SVC
-from flask import Flask, request, jsonify
-import pickle
+
+from flask import Flask, request
 import joblib
 app = Flask(__name__)
 
@@ -84,14 +80,11 @@ def predict():
             return "Customer is not interested"
             
    
-#if __name__ == '__main__':
-#    app.run(threaded=True)
-
 if __name__ == '__main__':
     import os
-    HOST = os.environ.get('SERVER_HOST', 'localhost')
+    host = os.environ.get('server_host', 'localhost')
     try:
-        PORT = int(os.environ.get('SERVER_PORT', '5555'))
-    except ValueError:
-        PORT = 5555
-    app.run(HOST, PORT)
+        port = int(os.environ.get('server_port', '5555'))
+    except valueerror:
+        port = 5555
+    app.run(host, port)
