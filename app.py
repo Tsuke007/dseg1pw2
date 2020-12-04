@@ -81,10 +81,11 @@ def predict():
             
    
 if __name__ == '__main__':
-    import os
-    host = os.environ.get('server_host', 'localhost')
-    try:
-        port = int(os.environ.get('server_port', '5555'))
-    except valueerror:
-        port = 5555
-    app.run(host, port)
+    #import os
+    #host = os.environ.get('server_host', 'localhost')
+    #try:
+    #    port = int(os.environ.get('server_port', '5555'))
+    #except valueerror:
+    #    port = 5555
+    app.run(debug=True)
+    #app.run(host, port)
