@@ -1,37 +1,37 @@
 import numpy as np
-
 from flask import Flask, request
 import joblib
+from flask_cors import CORS
 app = Flask(__name__)
+cors = CORS(app, resources={r"/api/*": {"origins": "*"}})
 
-# Make the WSGI interface available at the top level so wfastcgi can get it.
 wsgi_app = app.wsgi_app
 
 
 @app.route('/')
-def index():
-    return "Hello World!"
+def home():
+    return "Hello DSEG1"
 
 
 @app.route('/predict', methods = ['GET'])
 def predict():
     model = joblib.load('model.pkl')
     if request.method == 'GET':
-        #answer_list = []
-        Age = int(request.args.get("age"))  #@param {type:"number"}
-        Driving_License = str(request.args.get("driving_license")) == "Yes"  #@param {type:"boolean"}
-        Region_Code = int(request.args.get("region_code")) #@param {type:"number"}
-        Previously_Insured = str(request.args.get("previously_insured")) == "Yes" #@param {type:"boolean"}
-        Annual_Premium = int(request.args.get("annual_premium")) #@param {type:"number"}
-        Policy_Sales_Channel = int(request.args.get("policy_sales_channel")) #@param {type:"number"}
-        Vintage = int(request.args.get("vintage")) #@param {type:"number"}
-        Gender = str(request.args.get("gender")) #@param ['Male', 'Female'] {type:"string"}
-        Vehicle_Age = str(request.args.get("vehicle_age")) #@param ['< 1 Year', '1-2 Year', '> 2 Years'] {type:"string"}
-        Vehicle_Damage_Yes =  str(request.args.get("vehicle_damage_yes")) == "Yes" #@param {type:"boolean"}
+
+        Age = int(request.args.get("age"))
+        Driving_License = str(request.args.get("driving_license")) == "Yes"
+        Region_Code = int(request.args.get("region_code"))
+        Previously_Insured = str(request.args.get("previously_insured")) == "Yes"
+        Annual_Premium = int(request.args.get("annual_premium"))
+        Policy_Sales_Channel = int(request.args.get("policy_sales_channel"))
+        Vintage = int(request.args.get("vintage"))
+        Gender = str(request.args.get("gender"))
+        Vehicle_Age = str(request.args.get("vehicle_age"))
+        Vehicle_Damage_Yes =  str(request.args.get("vehicle_damage_yes")) == "Yes"
 
         Driving_License_No = 1
         if str(request.args.get("driving_license")) == "Yes":
-            Driving_License_No = 0
+            Driving_License_No = 1
 
         Driving_License_Yes = 0
         if str(request.args.get("driving_license")) == "Yes":
@@ -56,6 +56,7 @@ def predict():
         Vehicle_Age_1_Year = 0
         Vehicle_Age_1_2_Year = 0
         Vehicle_Age_2_Years = 0
+
         if str(request.args.get("vehicle_age")) == "< 1 Year":
             Vehicle_Age_1_Year = 1
         elif str(request.args.get("vehicle_age")) == "1-2 Year":
@@ -81,11 +82,12 @@ def predict():
             
    
 if __name__ == '__main__':
+    app.run()
     #import os
     #host = os.environ.get('server_host', 'localhost')
     #try:
     #    port = int(os.environ.get('server_port', '5555'))
     #except valueerror:
     #    port = 5555
-    app.run(debug=True)
+
     #app.run(host, port)
